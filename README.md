@@ -1,2 +1,2 @@
-# [homepage/app launcher](8.8.8.8)
+# [homepage/app launcher](https://elliotsemicolon.github.io/)
 This is a little root website that hosts my javascript projects
