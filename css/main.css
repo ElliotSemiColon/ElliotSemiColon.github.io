@@ -13,6 +13,7 @@ body{
 }
 
 .button{
+    border: 4px solid black;
     margin: 1em;
     margin-right: 0;
     text-align: left;
@@ -22,7 +23,8 @@ body{
     transform: skewY(0deg);
     outline-width: 2em;
     color: rgb(109, 109, 109);
-    outline-style: auto;
+    border-color: grey;
+    border-radius: 1em;
     overflow: hidden;
     transition-duration: 0.2s;
 }
@@ -62,7 +64,7 @@ header{
 .button:hover {
     background-color: rgba(66, 134, 244, 0.164);
     color: rgb(66,133,244);
-    outline-style: auto;
     transform: translate(2em) scale(1.05);
     margin-right: -2em;
+    border: 4px solid rgb(66,133,244);
   }
