@@ -1,5 +1,5 @@
-import VectorHandler from "/src/vectorhandler.js";
-import Graph from "/src/graph.js"
+import VectorHandler from "/projects/fourier/src/vectorhandler.js";
+import Graph from "/projects/fourier/src/graph.js"
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");

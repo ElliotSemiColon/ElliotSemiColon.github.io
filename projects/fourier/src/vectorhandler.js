@@ -1,4 +1,4 @@
-import Vector from "/src/vector.js";
+import Vector from "/projects/fourier/src/vector.js";
 export default class VectorHandler{
     constructor(vectorNumber, frequency, firstC, initialStartPoint){
         this.vectorNumber = vectorNumber;
