@@ -23,7 +23,7 @@ let keypressed = false;
 function keyPressed(event){
     //console.log(event.keyCode);
     if(event.keyCode === 13 && keypressed == false){
-        if(circles > 0 && circles < 500){setup(circles);}else{setup(7);}
+        if((circles > 0) && (circles < 2000)){setup(circles);}else{setup(7);}
     }
 }
 
