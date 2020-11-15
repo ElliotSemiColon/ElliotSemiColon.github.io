@@ -52,6 +52,7 @@ function setup(circles, frequency){
     console.log(`setting up with ${circles} circles at ${frequency} revolutions per second...`);
     restarts++;
     frame = 0;
+    firstLoop = true;
         
     let c = [window.innerHeight/4, Math.PI/2];
 
