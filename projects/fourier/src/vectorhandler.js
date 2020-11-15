@@ -9,7 +9,7 @@ export default class VectorHandler{
         this.initialStartPoint = initialStartPoint;
     }
 
-    createVector(){ //recursively generate vectors 
+    createVector(){
         if (this.count >= this.vectorNumber) return;
 
         if(this.count == 0){ //(this.count+1)*2)-1 is just 2n-1 which is used in the basic squarewave approximation 

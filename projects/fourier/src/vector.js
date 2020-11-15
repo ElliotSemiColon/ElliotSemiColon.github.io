@@ -23,12 +23,14 @@ export default class Vector{
     }
 
     draw(ctx){ //renders vector
-        ctx.strokeStyle = `white`;
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = `rgba(255,255,255,0.2)`;
+        ctx.lineWidth = 2;
         
         ctx.beginPath();
         ctx.arc(this.startpoint.x, this.startpoint.y, 4*this.c[0], 0, 2 * Math.PI);
         ctx.stroke();   
+
+        ctx.strokeStyle = `rgba(255,255,255,1)`;
 
         ctx.beginPath();
         ctx.moveTo(this.startpoint.x, this.startpoint.y);

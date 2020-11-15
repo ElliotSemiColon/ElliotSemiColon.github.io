@@ -3,18 +3,31 @@ import Graph from "/projects/fourier/src/graph.js"
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-
-const c = [300, Math.PI/2]; //initial magnitude and offset (pi/2 being 0 radians from the right horizontal)
+ //initial magnitude and offset (pi/2 being 0 radians from the right horizontal)
 let handler = 0; 
 let graph = 0; //last number is the number of points on the graph
+let firstLoop = true;
+let startTime;
 
-const input = document.querySelector('input');
-input.addEventListener('input', updateValue);
+const inputFrequency = document.getElementById('rads');
+inputFrequency.addEventListener('input', updateRads);
+const inputCircles = document.getElementById('circles');
+inputCircles.addEventListener('input', updateCircles);
 let circles = 0;
+let frequency = 0;
+let restarts = 0;
+let frame = 0;
 
-function updateValue(e){
+function updateCircles(e){
     circles = e.target.value;
+    //console.log(e.target.value);
     //console.log(`calculating with ${e.target.value} circles`);
+}
+
+function updateRads(e){
+    frequency = e.target.value;
+    //console.log(e.target.value);
+    //console.log(`calculating with ${e.target.value} rps`);
 }
 
 window.addEventListener('keydown', keyPressed);
@@ -22,65 +35,69 @@ let keypressed = false;
 
 function keyPressed(event){
     //console.log(event.keyCode);
-    if(event.keyCode === 13 && keypressed == false){
-        if((circles > 0) && (circles < 2000)){setup(circles);}else{setup(7);}
+    if(event.keyCode === 13/* && keypressed == false*/){
+        if((circles > 0) && (circles < 2000) && (frequency)){ //error checking
+            setup(circles, frequency);
+        }else if((circles > 0) && (circles < 2000)){
+            setup(circles, 0.25);
+        }else if((frequency > 0)){
+            setup(1, frequency);
+        }else{
+            setup(1, 0.25);
+        } //base case for a shit input
     }
 }
 
-function setup(circles){
-    console.log(`setting up with ${circles} circles...`);
-    keypressed = true;
-    
+function setup(circles, frequency){
+    console.log(`setting up with ${circles} circles at ${frequency} revolutions per second...`);
+    restarts++;
+    frame = 0;
+        
+    let c = [window.innerHeight/4, Math.PI/2];
+
     let middleOfScreen = {
         x: canvas.width/2,
         y: canvas.height/2
     }
 
-    handler = new VectorHandler(circles, 0.25, c, middleOfScreen); //first number denotes the number of circles, second is the frequency in turns per second 
-    graph = new Graph({x: 0, y: 0}, 100/handler.omega);
+    handler = new VectorHandler(circles, frequency, c, middleOfScreen); //first number denotes the number of circles, second is the frequency in turns per second 
+    graph = new Graph({x: 0, y: 0}, Math.round(70/handler.omega),[]);
     handler.createVector();
-    //console.log(handler.vectors);
-    
+
     window.addEventListener('resize', viewportResized, false);
-    
-    function viewportResized(){ //resizes canvas to window with viewport resize
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        handler.resized({x: window.innerWidth/2.75, y: window.innerHeight/2});
-        graph.resized({x: window.innerWidth/1.5, y: window.innerHeight/2});
-    }
     
     viewportResized();
 
     mainLoop();
 }
-/*
-function drawVector(ctx, timestamp, c){
-    ctx.strokeStyle = `white`;
-    ctx.lineWidth = 3;
-    
-    ctx.beginPath();
-    ctx.arc(canvas.width/2, canvas.height/2, c[0], 0, 2 * Math.PI);
-    ctx.stroke();   
 
-    ctx.beginPath();
-    ctx.moveTo(canvas.width/2, canvas.height/2);
-
-    let endpointX = (canvas.width/2)+(Math.sin(((timestamp/500)*Math.PI)+c[1]))*c[0];
-    let endpointY = (canvas.height/2)+(Math.cos(((timestamp/500)*Math.PI)+c[1]))*c[0];
-    
-    ctx.lineTo(endpointX, endpointY);
-    ctx.stroke();
-}*/
+function viewportResized(){ //resizes canvas to window with viewport resize
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    handler.resized({x: window.innerWidth/2.75, y: window.innerHeight/2});
+    graph.resized({x: window.innerWidth/1.5, y: window.innerHeight/2});
+}
 
 function mainLoop(timestamp){
 
-    ctx.fill = `black`;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    if((firstLoop)&&(timestamp >= 1)){
+        startTime = timestamp;
+        firstLoop = false;
+        console.log(`${startTime}ms`);
+    } 
     
-    let endpoint = handler.calculate(timestamp, ctx); //gets endpoint and renders visuals
-    graph.update(endpoint, timestamp);
-    graph.draw(endpoint, ctx);
+    if(startTime){
+        ctx.fill = `black`;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        
+        let endpoint = handler.calculate(timestamp-startTime, ctx); //gets endpoint and renders visuals
+        if((frame%restarts)==0){ //takes readings every restarts number of frames because for some reason it was doing readings faster proportional to the number of restarts /shrug
+            graph.update(endpoint, timestamp-startTime);
+        }
+        graph.draw(endpoint, ctx);
+    }
+
+    frame++;
 
     requestAnimationFrame(mainLoop);
 }
