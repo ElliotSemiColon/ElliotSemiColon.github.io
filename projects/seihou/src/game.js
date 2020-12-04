@@ -14,7 +14,7 @@ let gameTime, startTime = 0;
 
 // OBJECTS
 let player = new Player(); //player object creation using Player class 
-let ui = new UI(true); //debug mode 
+let ui = new UI(false); //debug mode 
 let controller = new Controller(); //object that handles key input
 let bossHandler = new BossHandler();
 let menu = new Menu(c.width,c.height,version);
@@ -126,7 +126,7 @@ function gameLoop(gameTime, deltaTime){ //main game loop
         if ((bossHandler.currentEmitter.collisionCheck(player) > 0) && (player.invincible != true)){
             player.kill(); //resets players position, velocity etc.
             player.lives -= 1;
-            ui.multiplier *= 0.25;
+            ui.multiplier *= 0.25; //quaters multiplier on death
         }
         
         if ((bossHandler.currentEmitter.grazeCheck(player) > 0)&&(player.invincible != true)){

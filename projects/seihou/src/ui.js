@@ -35,10 +35,10 @@ export default class UI{
         this.bonus = 0;
 
         this.boostBar = {
-            trickle: 0.025, //damage boost passive increase rate
+            trickle: -0.01, //damage boost passive increase rate
             leftX: this.damageBoostStyle.position.x,
             topY: this.damageBoostStyle.position.y-17,
-            rightX: 245, //lenght
+            rightX: 255, //length
             bottomY: 20, //height
             colour: "rgba(255, 255, 255, 0.5)",
             boostColour: "rgba(255, 255, 0, 1)",
@@ -118,8 +118,12 @@ export default class UI{
             this.multiplier = 0;
         }
         
-        if (this.multiplier > this.boostBar.maxBoost*5){
+        if(this.multiplier > this.boostBar.maxBoost*5){
             this.multiplier = 500;
+        }
+
+        if(this.multiplier <= 0){
+            this.multiplier = 0.25;
         }
         this.damageBoost += ((this.multiplier/5)-this.damageBoost)/25;
         player.emitter.fireRate = 10+(this.multiplier/40);
