@@ -226,5 +226,10 @@ Issues to do with scaling:
 
 		- just outright removing the dump function didnt work, as splicing and stuff made bullet flash when some were being removed, which looks like shit ngl
 
+////////////////////////////////////// v0.4.8 /////////////////////////////////////////
 
-	
+	- finally have a goddamn player sprite !!
+
+		issues included working out how to use the drawimage procedure properly (sx, sy, dx, dy, etc)
+
+		had to make a new class image which has a method that handles the different frames

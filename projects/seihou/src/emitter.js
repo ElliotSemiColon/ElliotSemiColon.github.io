@@ -125,7 +125,7 @@ export default class Emitter{
             
                 this.distance = Math.sqrt(Math.pow((this.bulletArray[i].position.x - object.position.x), 2) + Math.pow((this.bulletArray[i].position.y - object.position.y), 2)); //bit o' pythag
     
-                if(this.distance <= (this.multiplierRadius*this.playArea.height/938 + object.radius + this.bulletArray[i].radius)){ 
+                if(this.distance <= (this.multiplierRadius*this.playArea.scaler + object.radius + this.bulletArray[i].radius)){ 
                     //console.log(this.multiplierRadius*this.playArea.height/938);
                     return true;
 

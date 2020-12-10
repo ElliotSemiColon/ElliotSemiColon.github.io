@@ -902,53 +902,17 @@ export default class BossHandler{
             y: 200
         }
         this.bossID = 0; //set to the boss you want it to start on 0=boss1, 1=boss2 etc.
-        this.boss1 = {  //THEME: SPINNING BULLETS
+        //cirno
 
-            attackArray: [
-                [1, 180, 0.1, 15, 0, 3, -0.02, 0.00005, 10, "rgba(111, 45, 122, 1)", 10], 
-                [1.5, 180, 0.05, 12, 0, 5, 0, 0, 9, "rgba(127, 127, 50, 1)", 9], //fireRate, range, deltaAngle, numberShotPairs, offset, linear, square, cube, radius, fillColour, border
-                [2, 180, 0.125, 8, 0, 2.5, -0.02, 0, 7, "rgba(127, 127, 50, 1)", 50],
-                [1.4, 180, 0.1, 8, 0, 4, -0.025, 0, 20, "rgba(50, 127, 50, 1)", 50],
-                [1, 180, 0.1, 25, 0, 4, -0.0049, 0, 10, "rgba(50, 127, 50, 1)", 0],
-            ],
-
-        }
-        //fhana
-        this.boss2 = { //THEME: CIRCLE PULSES
-
-            attackArray: [                 
-                [14, 180, 0.25, 2, 0, 3, -0.001, 0, 7.5, "rgba(50, 127, 127, 1)", 9],
-                [10, 90, -0.25, 3, 0, -4, 0.02, -0.00005, 10, "rgba(0, 100, 150, 1)", 10],  
-                [7, 180, 0.11, 4, 0, 5, -0.023, 0.00004, 15, "rgba(127, 127, 5, 1)", 9],   
-                [5, 90, 0.25, 5, 0, 5, 0, 0, 8, "rgba(0, 100, 150, 1)", 350],
-                [20, 180, -0.5, 2, 0, 6, -0.01, -0.0000025, 7, "rgba(0, 100, 150, 1)", -5],
-            ],
-
-        }
-
-        this.boss3 = { //THEME: HAIL OF BULLETS!
-
-            attackArray: [
-                [5, 180, 0.05, 7, 0, 100, 0, 0, 7.5, "rgba(50, 127, 127, 1)", 9], 
-                [4, 180, 0.25, 12, 0, 3, -0.001, 0, 7.5, "rgba(50, 127, 127, 1)", 9], 
-                [14, 180, 0.25, 2, 0, 3, -0.001, 0, 7.5, "rgba(50, 127, 127, 1)", 9],
-                [5, 180, 0.05, 10, 0, 3, 0, 0, 7.5, "rgba(50, 127, 127, 1)", 9],
-                [14, 180, 0.25, 2, 0, 3, -0.001, 0, 7.5, "rgba(50, 127, 127, 1)", 9]
-            ],
-
-        }
-
-        this.boss4 = { //THEME: REVERSE ATTACKS
-
-            attackArray: [
-                [2.5, 180, 0.055, 3, 0.55, -0.285, 0.06, 8, "rgba(0, 200, 250)", 350],
-                [5, 90, 0.075, 3, 0.55, -0.285, 0.06, 8, "rgba(0, 200, 250)", 350],
-                [10, 45, 0.075, 3, 0.75, -0.285, 0.06, 8, "rgba(0, 200, 250)", 350],
-                [7.5, 95.5, -0.33, 5, 0.58, -0.6, 0.3, 13.25, "rgba(111, 51, 189)", 200],
-                []
-            ]
-
-        }
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+        //paste back the new attacks//!!
+    
         
         this.attackID = -2;
         this.attackIndex = this.attackID+1;
