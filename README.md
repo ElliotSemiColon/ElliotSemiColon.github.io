@@ -1,2 +1,2 @@
-# [https://www.elliotsemicolon.github.io]url
+# [url]https://www.elliotsemicolon.github.io
 website that hosts my apps
