@@ -1,0 +1,121 @@
+export default class Bullet{ //exports the class for use in game.js
+
+    constructor(spawnX, spawnY, gradient, polarity, theta, offset, linear, square, cube, radius, fillColour, border, playArea, scaler, creationTime){ //constructs object with initial coords on spawn point
+
+        this.yIntercept = 0;
+        this.offset = offset;
+        this.linearCoeff = linear;
+        this.squareCoeff = square;
+        this.cubeCoeff = cube;
+        this.creationTime = creationTime;
+        this.radius = radius;//bullet radius
+        this.deltaX = 0; //change in x over time
+        this.verticalLim = 100000000; //some big number near infinity (for dealing with infinite gradient)
+        this.polarity = polarity; //bullet going up or down?
+        this.gradient = gradient; //the gradient of the bullet that's calculated from the desired angle
+        this.theta = theta; //the desired angle of the bullet
+        this.fillColour = fillColour;
+        this.strokeColour;
+        this.remove = false; //if true the bullet is removed from the array to save memory (this is used in garbage collection)
+        this.position = { //self explanatory
+            x: spawnX,
+            y: spawnY
+        }
+        this.original = {
+            x: spawnX,
+            y: spawnY
+        }
+        this.deltaPos;
+        this.border = border;
+        this.fillArraySplit = this.fillColour.split('(').join(',').split(')').join(',').split(',');
+        this.fillArraySplit.shift(); //removes 'rgb'  
+        this.fillArraySplit.pop();  //removes alpha...
+        this.colourGlide = {
+            r: parseInt(this.fillArraySplit[0]),
+            g: parseInt(this.fillArraySplit[1]),
+            b: parseInt(this.fillArraySplit[2]),
+            deltaColour: 2.5
+        };
+        if ((this.fillArraySplit.length > 3)&&(this.fillArraySplit[3] != "")){this.alpha = this.fillArraySplit[3]}else{this.alpha = 1;}; //fills in a 1 for alpha if not provided one
+        this.limit = 0.5
+
+        this.playArea = playArea;
+        this.scaler = scaler;
+        //this.scaledSpeed = this.speed*this.scaler;
+    }
+    
+    draw(ctx){ //draw the bullet
+
+        try{
+            ctx.beginPath(); //begins a vector path
+            ctx.arc(this.position.x, this.position.y, this.radius*this.scaler, 0, 2 * Math.PI, false); //shapes and locates the path
+            ctx.fillStyle = this.fillColour;//ctx.fillStyle = 'rgba('+this.position.x/(600/255)+', '+(255-this.position.y/(800/255))+', '+(255-this.deltaX*(255/this.speed))+', 1)'; //colour of inside circle
+            ctx.fill(); //draws filled circle
+            ctx.lineWidth = 5*this.scaler; //width of outline
+            ctx.strokeStyle = this.strokeColour; //ctx.strokeStyle = 'rgba('+(255-this.position.x/(600/255))+', '+(this.position.y/(800/255))+', '+(255-this.deltaX*(255/this.speed))+', 1)'; //colour of outline
+            ctx.stroke(); //draws outline 
+        }catch(e){
+            //bullet already been deleted
+        }
+    }
+
+    isResized(scaler){
+        this.scaler = scaler;
+    }  
+
+    calculateTerm(scaler, n){ //n is our x in the equation, dx is part of the scaler thats based on the angle of the bullet from the horizontal 
+        let cubeTerm = this.cubeCoeff*Math.pow(n/scaler, 3); //these are the different terms that make up our function //scaler is the term that we use to scale the speed of the bullet to the screen's size and each bullet's angle
+        let squareTerm = this.squareCoeff*Math.pow(n/scaler, 2); //each one is multiplied by its coefficient, then divided by the scaler to be multiplied later on... 
+        let linearTerm = this.linearCoeff*(n/scaler);
+        let constant = this.yIntercept/scaler; //...when the term is compiled...
+
+        //console.log(`${cubeTerm}, ${squareTerm}, ${linearTerm}, ${constant}, ${scaler}, ${n}`);
+
+        return scaler*(cubeTerm+squareTerm+linearTerm+constant); //...here! this allows us to scale functions linearly by multiplying their divided terms by the same number...
+    } //for more information refer to the link in known-issues.txt at root directory
+
+    update(deltaTime, endless, time){
+
+        try{
+            let interceptY = (this.position.y - (this.position.x * this.gradient)); //calculated the y intercept based off of the original coords the bullet is initialised with
+
+            this.deltaX = (this.polarity) * Math.cos(this.theta);    //works out change in x based on angle
+
+            if (!deltaTime) return;
+
+            if (Math.abs(this.gradient) < this.verticalLim){ //this if/else statement handles exceptions where the bullet is being shot directly up or down, as the gradient is near infinite and cannot be worked with
+                
+                this.position.x = (this.calculateTerm(this.scaler, (time-this.creationTime+this.offset)*this.scaler)*this.deltaX)+this.original.x; //follow up at line 61 ^ (this whole function controls actual x)
+                this.position.y = (this.gradient * this.position.x) + interceptY;
+            }else{ //if its moving vertically, the only thing that changes is its y position
+                this.position.y = this.polarity*(this.calculateTerm(this.scaler, (time-this.creationTime+this.offset)*this.scaler))+this.original.y;
+                //console.log(`is vertical\n position ${this.position.y}\n polarity ${this.polarity}\n scaler ${this.scaler}\n original y ${this.original.y}`);
+            }
+            //the below speedlimit makes the bullets wobble when they try to go too fast on endless
+            /*
+            if(endless){
+                if(this.scaledSpeed >= this.limit+0.1){
+                    this.scaledSpeed = this.limit;
+                }else if(this.scaledSpeed <= (this.limit+0.1)*-1){
+                    this.scaledSpeed = this.limit*-1;
+                }
+            }*/
+        //colour management
+
+            this.colourGlide.r += (deltaTime * this.colourGlide.deltaColour)*0.02;
+            this.colourGlide.g += (deltaTime * this.colourGlide.deltaColour)*0.02;
+            this.colourGlide.b += (deltaTime * this.colourGlide.deltaColour)*0.02;
+
+            this.fillColour = `rgba(${this.colourGlide.r},${this.colourGlide.g},${this.colourGlide.b},${this.alpha})`;
+            this.strokeColour = `rgba(${this.colourGlide.r*2},${this.colourGlide.g*2},${this.colourGlide.b*2},${this.alpha})`;
+
+        }catch(e){
+            console.log(`bullet error! ${e}`);
+            //bullet already been deleted
+        }
+
+        if ((this.position.x < this.playArea.x - this.border)||(this.position.x > this.playArea.x + this.playArea.width + this.border)||(this.position.y < this.playArea.y - this.border)||(this.position.y > this.playArea.height + this.border)){
+            this.remove = true;
+        }
+    }
+}
