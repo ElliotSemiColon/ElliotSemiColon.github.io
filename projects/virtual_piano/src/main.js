@@ -1,7 +1,7 @@
-import Controller from "/src/controller.js"
-import Text from "/src/text.js"
-import SoundHandler from "/src/soundhandler.js"
-import Songs from "/src/songs.js"
+import Controller from "/project/virtual_piano/src/controller.js"
+import Text from "/project/virtual_piano/src/text.js"
+import SoundHandler from "/project/virtual_piano/src/soundhandler.js"
+import Songs from "/project/virtual_piano/src/songs.js"
 console.log("initialized");
 
 let canvas = document.getElementById("ThisIsCanvas");
