@@ -39,18 +39,32 @@ function makeGradient(colour1, colour2, x){
     return gradient;
 }
 
+function chooseColour(one, two, three){
+    let chosenColours = [0,1];
+    let colours = [one, two, three];
+    let randInt = Math.round(Math.random()*100);
+    if(randInt < 2){
+        chosenColours[randInt%2]++;
+        console.log("switch");
+    }
+    return [colours[chosenColours[0]%3], colours[chosenColours[1]%3]];
+}
+
 function main(timestamp){
     
     if(timestamp){
         let x = timestamp*speed/1000
-        let rgb = rainbow(x);
-        console.log(rgb.b, rgb.r, rgb.g);
+        let rgb = rainbow(x*3);
+        //console.log(rgb.b, rgb.r, rgb.g);
         let colour1 = rgbToHex(rgb.r, rgb.g, rgb.b);
         //let colour2 = rgbToHex(rgb.b, rgb.r, rgb.g);
         let colour2 = rgbToHex(rgb.g, rgb.b, rgb.r);
+        let colour3 = rgbToHex(rgb.b, rgb.r, rgb.g);
         //console.log(colour1, colour2);
     
-        ctx.fillStyle = makeGradient(colour1, colour2, x);
+        let colours = chooseColour(colour1, colour2, colour3);
+
+        ctx.fillStyle = makeGradient(colours[0], colours[1], x);
         ctx.fillRect(0,0,canvas.width,canvas.height);
     }
     
