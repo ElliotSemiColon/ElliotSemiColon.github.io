@@ -1,2 +1,2 @@
-# line-line-intersection
-iteractive line-line intersection
+# raycaster
+naive approach to raycasting in javascript

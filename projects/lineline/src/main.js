@@ -1,5 +1,4 @@
-import Scene from "/projects/raycaster/src/scene.js";
-import Raycast from "/projects/raycaster/src/raycast.js"
+import Scene from "/projects/lineline/src/scene.js";
 //import LineSegment from "/src/line.js";
 //import Point from "/src/point.js";
 
@@ -15,14 +14,12 @@ function resizeCanvas(){
 }
 
 let deltaTime = 0, lastTime = 0;
-let mouseX = 650, mouseY = 650;
-let dragging = false;
+let mouseX, mouseY;
 let scene = new Scene();
-let raycast = new Raycast(150,150);
-raycast.generateRays();
-//console.log(raycast);
 scene.initialise();
+scene.update();
 
+let dragging = false;
 
 function getMouse(event){
     mouseX = event.clientX, mouseY = event.clientY;
@@ -38,6 +35,7 @@ canvas.addEventListener('mousedown', (event) => {
 }); 
 canvas.addEventListener('mousemove', (event) => {
     if(dragging){
+        scene.update();
         getMouse(event);
         scene.points.forEach(point =>{
             if(point.dragging){point.drag({x: mouseX, y: mouseY});}
@@ -50,30 +48,23 @@ canvas.addEventListener('mouseup', (event) => {
         point.dragging = false;
     });
     dragging = false;
+    scene.update();
 }); 
 
 function mainLoop(timestamp){
-    /*setTimeout(function(){*/ //slowed framerate to help sort out rendering bugs
-        deltaTime = timestamp - lastTime; //calculates delta time (frame time)
-        lastTime = timestamp;
+    deltaTime = timestamp - lastTime; //calculates delta time (frame time)
+    lastTime = timestamp;
     
-        raycast.position = {x: mouseX, y: mouseY};
-    
-        background();
-        raycast.update();
-        raycast.intersect(scene);
-        //if(dragging){scene.update();}
-        //scene.update();
-        raycast.draw(ctx);
-        scene.draw(ctx);
-        
-        requestAnimationFrame(mainLoop);
-    /*}, 5000);*/
+    background();
+    scene.draw(ctx);
+    //if(dragging){scene.update();}
+
+    requestAnimationFrame(mainLoop);
 }
 
 mainLoop();
 
 function background(){
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#2C2F33';
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }

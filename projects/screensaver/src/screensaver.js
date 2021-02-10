@@ -8,7 +8,7 @@ function resizeCanvas(){
     canvas.height = window.innerHeight;
 }
 
-let speed = 0.03;
+let speed = 0.3;
 
 function toHex(int){
     let hex = int.toString(16);
@@ -43,7 +43,11 @@ function chooseColour(one, two, three){
     let chosenColours = [0,1];
     let colours = [one, two, three];
     let randInt = Math.round(Math.random()*100);
-    return [colours[0], colours[1]];
+    if(randInt < 2){
+        chosenColours[randInt%2]++;
+        console.log("switch");
+    }
+    return [colours[chosenColours[0]%3], colours[chosenColours[1]%3]];
 }
 
 function main(timestamp){

@@ -1,4 +1,4 @@
-import Point from "/projects/raycaster/src/point.js";
+import Point from "/projects/lineline/src/point.js";
 
 export default class Intersection extends Point{ //i be inheriting doe
     constructor(x,y){
@@ -9,7 +9,7 @@ export default class Intersection extends Point{ //i be inheriting doe
 
     draw(ctx){
         ctx.beginPath(); 
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false); 
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false); 
         ctx.strokeStyle = this.colour;
         ctx.lineWidth = 2;
         ctx.stroke(); 
