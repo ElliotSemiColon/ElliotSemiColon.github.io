@@ -4,19 +4,19 @@ import Intersection from "/projects/raycaster/src/intersection.js";
 
 export default class Scene{
     constructor(){ //Point(spawnx, spawny, draggable)
-        this.lineSegments = [new LineSegment(new Point(200,100,true), new Point(200,400,true)), //line segments in the level
-            new LineSegment(new Point(100,400,true), new Point(100,100,true)),
-            new LineSegment(new Point(100,100,true), new Point(201,100,true)),
-            new LineSegment(new Point(100,450,true), new Point(1050,120,true)),
-            new LineSegment(new Point(200,150,true), new Point(650,550,true)),
-            new LineSegment(new Point(599,600,true), new Point(701,600,true)), //box
-            new LineSegment(new Point(700,599,true), new Point(700,701,true)),
-            new LineSegment(new Point(701,700,true), new Point(599,700,true)),
-            new LineSegment(new Point(600,701,true), new Point(600,599,true)), //box end
-            new LineSegment(new Point(899,300,true), new Point(951,300,true)), //rectangle
-            new LineSegment(new Point(950,299,true), new Point(950,601,true)),
-            new LineSegment(new Point(951,600,true), new Point(899,600,true)),
-            new LineSegment(new Point(900,601,true), new Point(899,299,true))]; //walls in the scene
+        this.lineSegments = [new LineSegment(new Point(148,825,true), new Point(292,825,true)),
+            new LineSegment(new Point(290,827,true), new Point(290,658,true)),
+            new LineSegment(new Point(292,660,true), new Point(13,660,true)),
+            new LineSegment(new Point(15,662,true), new Point(15,15,true)),
+            new LineSegment(new Point(15,15,true), new Point(292,15,true)),
+            new LineSegment(new Point(290,15,true), new Point(290,177,true)),
+            new LineSegment(new Point(292,175,true), new Point(148,175,true)),
+            new LineSegment(new Point(150,173,true), new Point(150,498,true)),
+            new LineSegment(new Point(290,502,true), new Point(290,338,true)),
+            new LineSegment(new Point(288,340,true), new Point(432,340,true)), 
+            new LineSegment(new Point(430,342,true), new Point(430,173,true)),
+            new LineSegment(new Point(427,175,true), new Point(572,175,true)),
+            new LineSegment(new Point(570,15,true), new Point(570,500,true))]; //edges in the scene (each made from a pair of draggable verticies)
         this.points;
         //this.intersections = []; //intersection is never draggable but inherits from point
         this.isIntersecting = false;

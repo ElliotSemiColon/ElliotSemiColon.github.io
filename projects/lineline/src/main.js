@@ -1,4 +1,4 @@
-import Scene from "/projects/lineline/src/scene.js";
+import Scene from "/src/scene.js";
 //import LineSegment from "/src/line.js";
 //import Point from "/src/point.js";
 

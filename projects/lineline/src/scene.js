@@ -1,6 +1,6 @@
-import LineSegment from "/projects/lineline/src/line.js";
-import Point from "/projects/lineline/src/point.js";
-import Intersection from "/projects/lineline/src/intersection.js";
+import LineSegment from "/src/line.js";
+import Point from "/src/point.js";
+import Intersection from "/src/intersection.js";
 
 export default class Scene{
     constructor(){ //Point(spawnx, spawny, draggable)
