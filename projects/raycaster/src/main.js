@@ -20,6 +20,7 @@ let dragging = false;
 let scene = new Scene();
 let renderScene = true;
 let raycast = new Raycast(150,150);
+let renderRaycast = true;
 raycast.generateRays();
 //console.log(raycast);
 scene.initialise();
@@ -56,6 +57,19 @@ window.addEventListener('keyup', (event) => {
     if(event.code == "KeyM"){
         if(renderScene){renderScene = false;}else{renderScene = true;}
     }
+    if(event.code == "KeyN"){
+        if(renderRaycast){renderRaycast = false;}else{renderRaycast = true;}
+    }
+    if(event.code == "KeyK"){
+        raycast.instance += 50;
+        raycast.generateRays();
+    }
+    if(event.code == "KeyJ"){
+        if(raycast.instance > 50){
+            raycast.instance -= 50;
+            raycast.generateRays();
+        }
+    }
 }); 
 
 function mainLoop(timestamp){
@@ -71,7 +85,7 @@ function mainLoop(timestamp){
         raycast.intersect(scene);
         //if(dragging){scene.update();}
         //scene.update();
-        raycast.draw(ctx);
+        if(renderRaycast){raycast.draw(ctx);}
         if(renderScene){scene.draw(ctx);}
         
         requestAnimationFrame(mainLoop);
@@ -89,10 +103,11 @@ function background(){
 function text(){
     ctx.fillStyle = '#ffffff';
     ctx.font = "30px Arial";
-    ctx.fillText("Simple raycaster", 600, 50); 
-    ctx.fillText(`${Math.round(fps)}fps`, 835, 50);
+    ctx.fillText(`simple raycaster, ${raycast.instance} rays @ ${Math.round(fps)}fps`, 600, 50); 
     ctx.font = "20px Arial";
-    ctx.fillText("- hold mouse to move light source", 600, 75);
-    ctx.fillText("- drag transluscent points", 600, 95);
-    ctx.fillText("- press m to toggle walls", 600, 115);
+    ctx.fillText("- hold mouse to move light source", 600, 80);
+    ctx.fillText("- drag transluscent circles", 600, 110);
+    ctx.fillText("- m to toggle walls, n to toggle light", 600, 140);
+    ctx.fillText(`- j/k to decrease/increase rays respectively`, 600, 170);
+    ctx.fillText(`- if fps lower than your refresh rate, consider lowering # of rays`, 600, 200);
 }

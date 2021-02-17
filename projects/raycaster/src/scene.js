@@ -1,6 +1,5 @@
 import LineSegment from "/projects/raycaster/src/line.js";
 import Point from "/projects/raycaster/src/point.js";
-import Intersection from "/projects/raycaster/src/intersection.js";
 
 export default class Scene{
     constructor(){ //Point(spawnx, spawny, draggable)

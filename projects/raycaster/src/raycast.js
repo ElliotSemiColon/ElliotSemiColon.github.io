@@ -1,4 +1,3 @@
-import LineSegment from "/projects/raycaster/src/line.js";
 import Ray from "/projects/raycaster/src/ray.js";
 
 export default class Raycast{
@@ -6,13 +5,15 @@ export default class Raycast{
         this.rays = [];
         this.rayCoords = [];
         this.position = {x: x, y: y};
-        this.instance = 2000;
+        this.instance = 500;
         this.radius = 3000;
         this.offset = 0.7854;//0.7854; //offset for all generated rays, which circumvents the issue i had where sometimes the first ray generated would phase through walls for some reason
         //this.closestP = [];
     }
 
     generateRays(){ //generates rays radially around a point
+        this.rays = [];
+        this.rayCoords = [];
         for(let i=0; i < this.instance; i++){
             let interval = 6.2832/this.instance; //interval is the amount of radians turned per ray cast
             let theta = (interval*i)+this.offset;
