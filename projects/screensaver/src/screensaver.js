@@ -32,22 +32,14 @@ function rainbow(x){
     return colour;
 }
 
-function makeGradient(colour1, colour2, x){
-    let gradient = ctx.createLinearGradient(0,Math.tan(x)*-100,canvas.width,Math.tan(x)*100);
+function makeGradient(colour1, colour2, colour3, x){
+    let unitCircleX = Math.cos(x)*1500, unitCircleY = Math.sin(x)*1500;
+    let gradient = ctx.createLinearGradient(canvas.width/2-unitCircleX,canvas.height/2-unitCircleY,canvas.width/2+unitCircleX,canvas.height/2+unitCircleY);
     gradient.addColorStop(0, colour1);
-    gradient.addColorStop(1, colour2);
+    //gradient.addColorStop(0.25, colour3);
+    gradient.addColorStop(0.5, colour3);
+    gradient.addColorStop(1, colour1);
     return gradient;
-}
-
-function chooseColour(one, two, three){
-    let chosenColours = [0,1];
-    let colours = [one, two, three];
-    let randInt = Math.round(Math.random()*100);
-    if(randInt < 2){
-        chosenColours[randInt%2]++;
-        console.log("switch");
-    }
-    return [colours[chosenColours[0]%3], colours[chosenColours[1]%3]];
 }
 
 function main(timestamp){
@@ -61,10 +53,8 @@ function main(timestamp){
         let colour2 = rgbToHex(rgb.g, rgb.b, rgb.r);
         let colour3 = rgbToHex(rgb.b, rgb.r, rgb.g);
         //console.log(colour1, colour2);
-    
-        let colours = chooseColour(colour1, colour2, colour3);
 
-        ctx.fillStyle = makeGradient(colours[0], colours[1], x);
+        ctx.fillStyle = makeGradient(colour1, colour2, colour3, x);
         ctx.fillRect(0,0,canvas.width,canvas.height);
     }
     
