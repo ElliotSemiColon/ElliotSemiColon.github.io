@@ -1,4 +1,4 @@
-import Point from "/src/point.js";
+import Point from "/projects/lineline/src/point.js";
 
 export default class Intersection extends Point{ //i be inheriting doe
     constructor(x,y){
