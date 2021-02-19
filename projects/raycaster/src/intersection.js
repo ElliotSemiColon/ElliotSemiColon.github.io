@@ -1,4 +1,4 @@
-import Point from "/projects/raycaster/src/point.js";
+import Point from "/project/raycaster/src/point.js";
 
 export default class Intersection extends Point{ //i be inheriting doe
     constructor(x,y){
